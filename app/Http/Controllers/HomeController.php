@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function show()
     {
-        $posts = Post::get();
+        $posts = Post::get()->sortDesc();
 
         return view('welcome')->with('posts', $posts);
     }

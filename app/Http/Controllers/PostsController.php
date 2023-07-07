@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Http\Requests\PostRequest;
 
 class PostsController extends Controller
 {
@@ -33,8 +34,17 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request) // request por defecto se cambia por PostRequest que creamos
+    
     {
+
+        // $request->validate([
+        //     'title' => 'required|min:3',
+        //     'excerpt' => 'required|min:10',
+        //     'content' => 'required|min:15'
+        // ]);
+
+
         Post::create([
             'title' => $request->input('title'),
             'excerpt' => $request->input('excerpt'),
@@ -68,6 +78,7 @@ class PostsController extends Controller
      */
     public function edit(Post $post)
     {
+        // $this->authorize('update', $post);
         return view('posts.edit')->with([
             'post' => $post,
         ]);
@@ -82,6 +93,7 @@ class PostsController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        // $this->authorize('update', $post);
         $post->update([
             'title' => $request->input('title'),
             'excerpt' => $request->input('excerpt'),
@@ -99,6 +111,7 @@ class PostsController extends Controller
      */
     public function destroy(Post $post)
     {
+        // $this->authorize('delete', $post);
         $post->delete();
 
         return redirect('/');
